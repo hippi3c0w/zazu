@@ -1,0 +1,111 @@
+#!/bin/bash
+#############################################
+#											#
+#   Zazu is a script that monitorice and    #
+#   execute docker-compose commands into    #
+#   Docker applications                     #
+#											#
+#   Made by: Manu Alén-@hippi3c0w           #
+#   manualen@protonmail.com                 #
+#   Version: 1.0                            #
+#############################################
+
+##Style
+cat /home/hispamanu/cansina/zazu/style
+echo " "
+echo "
+==================================
+Made by: Manu Alén-@hippi3c0w
+manualen@protonmail.com
+Version: 1.0
+=================================="
+echo " "
+
+#####################
+#    Color Vars     #
+#####################
+
+#Color variables
+BLACK='\033[0;30m'
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+ORANGE='\033[0;33m'
+PURPLE='\033[0;34m'
+CYAN='\033[0;35m'
+LIGHTGRAY='\033[0;36m'
+NC='\033[0m'
+DARKGRAY='\033[1;30m'
+LIGHTRED='\033[1;31m'
+LIGHTGREEN='\033[1;32m'
+LIGHTORANGE='\033[1;33m'
+LIGHTPURPLE='\033[1;34m'
+LIGHTCYAN='\033[1;35m'
+#####################
+#        VARS	    #
+#####################
+user=`echo "$2"`
+server=`echo "$4"`
+command=`echo "$6"`
+
+#####################
+#     Functions     #
+#####################
+
+##Usage function
+function usage(){
+	echo "===Zazu Usage==="
+    printf "\n"
+    echo "-u: Used to specify a valid user in remote server"
+    echo "-s: Used to specify the remote server"
+    echo "-c: Used to specify the docker-compose command to exeute in remote server"
+    echo "Example: zazu -u me -s some -c ps"
+    printf "\n"
+
+}
+#status function
+function status(){
+	echo -e "[${GREEN}+${NC}] I Gonna check status of your Docker applications. Please wait"
+	sleep 2
+	ssh $user@$server 'cd /home/docker/sndr; docker-compose ps'
+}
+
+#logs function
+
+function logs(){
+	echo -e "[${GREEN}+${NC}] I Gonna check logs of your Docker applications. Please wait"
+	sleep 2
+	ssh $user@$server 'cd /home/docker/sndr; docker-compose logs'
+}
+
+#incorrect option function
+
+function invalid_option(){
+	echo -e "${RED} Invalid option! Please choose a valid option ${NC}"
+	sleep 1
+}
+
+
+#####################
+#   Check options   #
+#####################
+
+if [[ $# -lt 6 ]];then
+	usage
+fi
+
+######################
+#    Code logic      #
+######################
+case $command in
+	"ps")
+		status
+		;;
+	"logs")
+		logs
+		;;
+	*)
+		invalid_option
+		sleep 2
+		usage
+		;;
+	esac
