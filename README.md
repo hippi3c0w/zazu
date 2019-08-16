@@ -32,3 +32,6 @@ or you can use ***partera*** software
 ```
 partera -u hippi3c0w -r zazu
 ```
+
+# Disclaimer
+It only can be use in GNU/Linux distros
