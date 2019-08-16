@@ -11,7 +11,7 @@
 #############################################
 
 ##Style
-cat /home/hispamanu/cansina/zazu/style
+cat /var/partera/pretty/zazu/style
 echo " "
 echo "
 ==================================
